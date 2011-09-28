@@ -1,0 +1,50 @@
+body {
+   overflow: hidden;
+}
+
+html {
+   background-color:black;
+   color: white;
+   font-family: 'arial';
+   font-weight: 'bold';
+}
+
+#marker {
+  position: absolute;
+  top: 500px;
+  background-color: red;
+}
+
+#rejects {
+   position: absolute;
+   top: 0px;
+   right: 0px;
+}
+
+#controls {
+   position: absolute;
+   background-color: #444;
+   border: 1px solid gray;
+   right: 0px;
+   bottom: 0px;
+}
+
+#numbers {
+   position: absolute;
+   top: 0px;
+   left: 0px;
+}
+
+#rejects table {
+   border: 1px solid white;
+}
+
+td {
+   padding: 1em;
+   vertical-align: top;
+}
+
+h1 {
+   font-size: 200%;
+   color: yellow;
+}
