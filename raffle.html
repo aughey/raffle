@@ -18,6 +18,7 @@
          <input type="button" id="reload" value="Reload"/><br>
          <div class="tohide">
          Create tickets: <input type="text" id="count" value="300"/><br>
+         First Ticket # <input type="text" id="firstticket" value="3"/><br>
          Number of Columns: <input type="text" id="columns" value="10"/> <input type="button" id="create" value="Create"><br>
       </div>
          Speed: <input type="text" id="speed" value="5000"/><br>
@@ -28,9 +29,15 @@
          Manually Eliminate <input type="text" id="elcount" value="1"/> <input type="button" id="next" value="Eliminate"/><br>
       </div>
       <script>
-         Math.seedrandom($('#seed').attr('value'));
+         function sparam(id) {
+            return $('#' + id).attr('value');
+         }
+         function iparam(id) {
+            return parseInt(sparam(id));
+         }
+         Math.seedrandom(sparam('seed'));
          $('#seed').change(function() {
-            Math.seedrandom($('#seed').attr('value'));
+            Math.seedrandom(sparam('seed'));
          });
          function resizetime() {
             return 1000;
@@ -89,8 +96,8 @@
          var items_per_column;
          function createTickets() {
            $('#start').attr('disabled',false);
-            count = parseInt($('#count').attr('value'));
-            columns = parseInt($('#columns').attr('value'));
+            count = iparam('count');
+            columns = iparam('columns');
 
          var html = "<h1>Tickets In Play</h1><table id='inplay'><tr>";
          var rhtml = "<h1>Eliminated Tickets</h1><table id='eliminated'><tr>";
@@ -108,10 +115,11 @@
             items_per_column = Math.floor(items_per_column) + 1;
          }
          numbers = new Array;
-         for(var i=0;i<count;++i) {
+         var first = iparam('firstticket');
+         for(var i=first;i<count + first;++i) {
             var number = zeroFill(i);
             html = "<li id='n" + i + "' class='n'>" + number + "</li>"
-            var column = Math.floor(i / items_per_column);
+            var column = Math.floor((i - first) / items_per_column);
             $('#from' + column).append(html)
             numbers.push("#n" + i);
          }
@@ -186,11 +194,11 @@
          }
 
          function stopAt() {
-            return parseInt($('#stop').attr('value'));
+            return iparam('stop');
             }
 
          function doremove() {
-            var ms = parseInt($('#speed').attr('value'));
+            var ms = iparam('speed');
             setTimeout(function() {
             if(numbers.length < stopAt()) {
                   return;
@@ -230,7 +238,7 @@
          */
 
          $('#next').click(function() {
-         var count = parseInt($('#elcount').attr('value'));
+         var count = iparam('elcount');
          for(var i=0;i<count-1;++i) {
            removeOne(false)
            }
