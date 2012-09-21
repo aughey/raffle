@@ -113,8 +113,13 @@ $(function() {
           i += 1;
       });
 
+      doresize();
+    }
+
+    var doresize = function() {
       resizeSmoothly($('#inplay'));
     }
+    doresize = _.throttle(doresize,1000);
 
     function removeIfChildrenEmpty(el) {
       if(el) {
@@ -172,7 +177,7 @@ $(function() {
           el.remove(); 
           if(resize) {
           removeEmptyColumns();
-          resizeSmoothly($('#inplay')); 
+          doresize(); 
           }
           newel.appendTo(rejectel);
           newel.css({position: 'relative', top: 0, left: 0, fontSize: ""}); 
