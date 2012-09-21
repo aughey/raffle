@@ -5,6 +5,7 @@ $(function() {
     function iparam(id) {
     return parseInt(sparam(id));
     }
+    $('#seed').val("For Jamey " + Date.now())
     Math.seedrandom(sparam('seed'));
     $('#seed').change(function() {
       Math.seedrandom(sparam('seed'));
