@@ -189,7 +189,7 @@ $(function() {
     function doremove() {
       var ms = iparam('speed');
       setTimeout(function() {
-          if(numbers.length < stopAt()) {
+          if(numbers.length <= stopAt()) {
           return;
           }
           removeOne(true);
