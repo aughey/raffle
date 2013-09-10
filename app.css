@@ -41,6 +41,7 @@ html {
 
 .name {
   float: left;
+  outline: 1px dashed #111;
   width: 10em;
   color: white;
   background-color: black;
