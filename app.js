@@ -26,6 +26,10 @@ $(function() {
     }
   }
 
+  function availableNames() {
+    return $('.inplay .name.available');
+  }
+
   function resizeSmoothly(element) {
     var units = "px";
     var winheight = window.innerHeigth * 0.90;
@@ -202,9 +206,7 @@ $(function() {
       opacity: 0
     }, resizetime() * 2, function() {
       rejel.show('slow');
-      el.hide('slow',function() {
-        console.log("done with el")
-      })
+      el.hide('slow');
     });
 
     remaining.animate({
@@ -238,7 +240,7 @@ $(function() {
   function doremove() {
     var ms = iparam('speed');
     setTimeout(function() {
-      if (numbers.length <= stopAt()) {
+      if (availableNames().length <= stopAt()) {
         return;
       }
       removeOne(true);
@@ -333,6 +335,8 @@ $(function() {
     // Return the parsed data.
     return (arrData);
   }
+
+  createTickets();
 
   $('#create').click(createTickets);
   $('#start').attr('disabled', true);
