@@ -39,6 +39,15 @@ html {
    border: 1px solid white;
 }
 
+.name {
+  border: 1px solid green;
+  float: left;
+  width: 10em;
+  color: white;
+  background-color: black;
+  margin: .1em;
+}
+
 td {
    padding: 1em;
    vertical-align: top;
@@ -47,4 +56,13 @@ td {
 h1 {
    font-size: 200%;
    color: yellow;
+}
+
+.rejecting {
+  border: 1px solid red;
+  color: red;
+}
+
+.inplay {
+  width: 100%;
 }
