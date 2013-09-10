@@ -196,12 +196,12 @@ $(function() {
     remaining.stop(true);
 
     newel.stop(true);
-    newel.css('opacity',1); // the opacity might be in transition
-    rejel.css('opacity',1); // the opacity might be in transition
+    newel.css('opacity', 1); // the opacity might be in transition
+    rejel.css('opacity', 1); // the opacity might be in transition
     newel.animate({
       fontSize: "400%", // String(enlargedsize) + "px"
       top: 200,
-      left: $(window).width() / 2 - newel.width() * 2 
+      left: $(window).width() / 2 - newel.width() * 2
     }, resizetime() * 2).animate({
       opacity: 0
     }, resizetime() * 2, function() {
@@ -211,7 +211,7 @@ $(function() {
 
     remaining.animate({
       opacity: 0.25
-    }, resizetime()).animate({  
+    }, resizetime()).animate({
       opacity: 0.25
     }, resizetime() * 2).animate({
       opacity: 1.0
