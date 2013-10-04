@@ -78,13 +78,27 @@ $(function() {
         function empty(a) {
           return a == null || a == "";
         }
+        var firstname = 2;
+        var lastname = 3;
+        var count = 4;
         res = _.reject(res, function(row) {
-          return empty(row[0]) && empty(row[1]);
+          return row[firstname] == 'First' || (empty(row[firstname]) && empty(row[lastname]));
         })
+        extra = [];
+        _.each(res,function(row) {
+           if(row[count] > 1) {
+             _.times(row[count]-1,function() {
+                extra.push(row);
+             });
+           }
+        });
+        res = res.concat(extra);
+        res = _.sortBy(res,function(n) { return n[lastname]; });
         var names = _.map(res, function(row) {
-          return (row[0] + " " + row[1]).replace('/^ +/', '').replace(/ +$/, '');
+          return (row[firstname] + " " + row[lastname]).replace('/^ +/', '').replace(/ +$/, '');
         })
         createTicketsFromData(names);
+        updateTitles();
       })
       return;
     }
@@ -96,6 +110,7 @@ $(function() {
       data.push(zeroFill(i));
     }
     createTicketsFromData(data);
+    updateTitles();
   }
 
   function createTicketsFromData(data) {
@@ -106,6 +121,7 @@ $(function() {
       $('#numbers').html(_.template(t)({
         names: data
       }));
+      updateTitles();
     })
 
     /*
@@ -161,8 +177,22 @@ $(function() {
     }
   }
 
+  function namesAvailable() {
+    return $('.inplay .name.available');
+  }
+
+  function rejectedNames() {
+    return $('.rejected .name');
+  }
+
+  function updateTitles() {
+     console.log("updatetitles");
+     $('#niptitle').html("Names in play (" + namesAvailable().length + ")");
+     $('#rntitle').html("Rejected Names (" + rejectedNames().length + ")");
+  }
+
   function removeOne(resize) {
-    var names = $('.inplay .name.available');
+    var names = namesAvailable();
     var rand = Math.random();
     var index = Math.floor(rand * (names.length));
 
@@ -198,6 +228,7 @@ $(function() {
     newel.stop(true);
     newel.css('opacity', 1); // the opacity might be in transition
     rejel.css('opacity', 1); // the opacity might be in transition
+    rejel.css('font-size', rejectedsize + 'px'); // the opacity might be in transition
     newel.animate({
       fontSize: "400%", // String(enlargedsize) + "px"
       top: 200,
@@ -207,6 +238,7 @@ $(function() {
     }, resizetime() * 2, function() {
       rejel.show('slow');
       el.hide('slow');
+      updateTitles();
     });
 
     remaining.animate({
@@ -216,6 +248,8 @@ $(function() {
     }, resizetime() * 2).animate({
       opacity: 1.0
     }, resizetime() * 2);
+
+    updateTitles();
 
     /*
       .animate({fontSize:rejectel.css('font-size'), left: rejectpos.left, top: rejectpos.top + rejectel.height()},{duration: resizetime, complete: function() { 
@@ -349,6 +383,27 @@ $(function() {
   });
   $('#reload').click(function() {
     location.reload();
+  });
+
+  var inplaysize = 16;
+  var rejectedsize = 16;
+  function inplay() { return $('.inplay .name') }
+  function rejected() { return $('.rejected .name') }
+  $('#fontup').click(function() {
+    inplaysize++;
+    inplay().css('font-size',inplaysize + 'px');
+  });
+  $('#fontdown').click(function() {
+    inplaysize--;
+    inplay().css('font-size',inplaysize + 'px');
+  });
+  $('#fontupr').click(function() {
+    rejectedsize++;
+    rejected().css('font-size',rejectedsize + 'px');
+  });
+  $('#fontdownr').click(function() {
+    rejectedsize--;
+    rejected().css('font-size',rejectedsize + 'px');
   });
 
   $('#next').click(function() {
